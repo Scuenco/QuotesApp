@@ -8,7 +8,7 @@ using QuotesApp.API.Data;
 namespace QuotesApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190930205148_InitialCreate")]
+    [Migration("20191013220408_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,9 @@ namespace QuotesApp.API.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("SoldTo")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

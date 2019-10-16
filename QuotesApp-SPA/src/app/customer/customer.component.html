@@ -1,4 +1,4 @@
-<form>
+<!-- <form>
   <h4>mat-select</h4>
   <mat-form-field>
     <mat-label>Customer</mat-label>
@@ -9,4 +9,8 @@
     </mat-select>
   </mat-form-field>
   <p> Selected Customer: {{selectedCustomer}} </p>
-</form>
+</form> -->
+<h3>Customers</h3>
+<p *ngFor="let customer of customers">
+{{customer.name}} - {{customer.soldTo}}
+</p>
