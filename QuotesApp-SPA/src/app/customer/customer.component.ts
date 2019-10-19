@@ -16,12 +16,12 @@ export class CustomerComponent implements OnInit {
   ngOnInit() {
     this.getCustomers();
   }
-getCustomers() {
-  this.http.get('http://localhost:5000/api/customers')
-  .subscribe(response => {
-    this.customers = response;
-  }, error => {
-    console.log(error);
-  });
-}
+  getCustomers() {
+    this.http.get('http://localhost:5000/api/customers')
+    .subscribe(response => {
+      this.customers = response;
+    }, error => {
+      console.log(error);
+    });
+  }
 }

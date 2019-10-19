@@ -13,13 +13,22 @@ import { AppComponent } from './app.component';
 import { CustomerComponent } from './customer/customer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuoteComponent } from './quote/quote.component';
+import { NavComponent } from './nav/nav.component';
+
+import { AuthService } from './services/auth.service';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
+
 
 
 @NgModule({
    declarations: [
       AppComponent,
       CustomerComponent,
-      QuoteComponent
+      QuoteComponent,
+      NavComponent,
+      HomeComponent,
+      RegisterComponent
    ],
    imports: [
       BrowserModule,
@@ -34,7 +43,9 @@ import { QuoteComponent } from './quote/quote.component';
       CommonModule,
       MatRadioModule
    ],
-   providers: [],
+   providers: [
+      AuthService
+   ],
    bootstrap: [
       AppComponent
    ]
