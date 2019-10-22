@@ -8,6 +8,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import {MatRadioModule} from '@angular/material/radio';
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
 import { CustomerComponent } from './customer/customer.component';
@@ -35,14 +36,15 @@ import { ErrorInterceptorProvider } from './services/error.interceptor';
       BrowserModule,
       HttpClientModule,
       BrowserAnimationsModule,
+      FormsModule,
+      BsDropdownModule.forRoot(),
       MatSelectModule,
       MatFormFieldModule,
-      FormsModule,
       ReactiveFormsModule,
       MatAutocompleteModule,
       MatInputModule,
       CommonModule,
-      MatRadioModule
+      MatRadioModule,
    ],
    providers: [
       AuthService,
