@@ -19,6 +19,7 @@ using System.Text;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using QuotesApp.API.Helpers;
+using AutoMapper;
 
 namespace QuotesApp.API
 {
@@ -35,9 +36,14 @@ namespace QuotesApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt => {
+                    opt.SerializerSettings.ReferenceLoopHandling = 
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddCors();
+            services.AddAutoMapper(typeof(QuotesRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IQuotesRepository, QuotesRepository>();
             // specify the type of Authentication
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {

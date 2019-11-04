@@ -5,6 +5,4 @@ QuotesApp-SPA/src/app/quote/quote.component.css
 QuotesApp-SPA/src/app/quote/quote.component.html
 QuotesApp-SPA/src/app/quote/quote.component.spec.ts
 QuotesApp-SPA/src/app/quote/quote.component.ts
-QuotesApp.API/Models/Quote.cs
-QuotesApp.API/Models/DesignPartner.cs
 QuotesApp.API/Controllers/WeatherForecastController.cs
