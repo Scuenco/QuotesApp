@@ -26,13 +26,19 @@ namespace QuotesApp.API.Data
         public async Task<User> GetUser(int id)
         {
             // Include the quotes of this user with the given Id.
-            var user = await _context.Users.Include(q => q.Quotes).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _context.Users
+            .Include(user => user.Quotes).ThenInclude( quote => quote.Materials)
+            .Include(user => user.Quotes).ThenInclude(quote => quote.Customer)
+            .FirstOrDefaultAsync(user => user.Id == id);
             return user;
         }
 
         public async Task<IEnumerable<User>> GetUsers()
         {
-            var users = await _context.Users.Include(q => q.Quotes).ThenInclude(m => m.Materials).ToListAsync();
+            // Include Quotes from User, then include Materials and Customer from Quotes
+            var users = await _context.Users
+            .Include(user => user.Quotes).ThenInclude( quote => quote.Materials)
+            .Include(user => user.Quotes).ThenInclude(quote => quote.Customer).ToListAsync();
             return users;
         }
 

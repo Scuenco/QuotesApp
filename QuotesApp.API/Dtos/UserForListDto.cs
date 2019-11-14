@@ -7,7 +7,7 @@ namespace QuotesApp.API.Dtos
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public string Quote { get; set; }
+        //public string Quote { get; set; }
         public ICollection<QuotesForDetailsDto> Quotes { get; set; }
     }
 }

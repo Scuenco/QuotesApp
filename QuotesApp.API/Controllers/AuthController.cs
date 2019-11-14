@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -19,8 +19,10 @@ namespace QuotesApp.API.Controllers
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IMapper _mapper;
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
+            _mapper = mapper;
             _config = config;
             _repo = repo;
         }
@@ -28,19 +30,19 @@ namespace QuotesApp.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            // convert to lowercase
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
             // check if user exists
             if (await _repo.UserExists(userForRegisterDto.Username))
                 return BadRequest("Username already exists.");
             // Create a new User
-            var newUser = new User
-            {
-                Username = userForRegisterDto.Username
-            };
+            var userToCreate = _mapper.Map<User>(userForRegisterDto);
+            
             //Register the new User
-            var createdUser = await _repo.Register(newUser, userForRegisterDto.Password);
-            return StatusCode(201);
+            var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
+           
+            var userToReturn = _mapper.Map<UserForDetailsDto>(createdUser);
+            return CreatedAtRoute("GetUser", new {controller = "Users", 
+                    id = createdUser.Id}, userToReturn);
         }
 
         [HttpPost("login")]
@@ -60,7 +62,7 @@ namespace QuotesApp.API.Controllers
             // key to sign our token
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config
                 .GetSection("AppSettings:Token").Value));
-            
+
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -70,9 +72,10 @@ namespace QuotesApp.API.Controllers
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return Ok(new {
+            return Ok(new
+            {
                 token = tokenHandler.WriteToken(token)
             });
-         }
+        }
     }
 }

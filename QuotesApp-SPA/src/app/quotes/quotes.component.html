@@ -1,3 +1,23 @@
-<p>
-  quotes works!
-</p>
+<div class="container">
+  <a class='btn btn-primary mt-2' [routerLink]="['new']" >Create Quote</a>
+  <table class="table mt-2" >
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Quote #</th>
+        <th scope="col">Customer</th>
+        <th scope="col">Period</th>
+        <th scope="col">SalesPerson</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let user of users">
+      <tr *ngFor="let quote of user.quotes" >
+        <td>{{quote.id}}</td>
+        <td>{{quote.customer}}</td>
+        <td>{{quote.period}}</td>
+        <td>{{user.username}}</td>
+        <td>{{quote.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -7,7 +7,8 @@ namespace QuotesApp.API.Dtos
         [Required]
         public string Username { get; set; }
         [Required]
-        [StringLength(8, MinimumLength=6, ErrorMessage="You must specify password between 6 and 8.")]
+        [StringLength(13, MinimumLength=4, ErrorMessage="You must specify password between 4 and 13.")]
         public string Password { get; set; }
+        
     }
 }

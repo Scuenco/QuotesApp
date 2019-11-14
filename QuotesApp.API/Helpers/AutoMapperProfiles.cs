@@ -8,11 +8,15 @@ namespace QuotesApp.API.Helpers
     {
         public AutoMapperProfiles()
         { 
-            //Create our map, specifying the source and destination
+            //Create our map, specifying the source, destination
             CreateMap<User, UserForListDto>();
             CreateMap<User, UserForDetailsDto>();
-            CreateMap<Quote, QuotesForDetailsDto>();
+            CreateMap<Quote, QuotesForDetailsDto>()
+                // For QuotesForDetailsDto.Customer, we will map from Quote.Customer.Name
+                .ForMember(dest => dest.Customer, 
+                            opt => opt.MapFrom(src => src.Customer.Name));
             CreateMap<Material, MaterialForQuotesForDetailsDto>();
+            CreateMap<UserForRegisterDto, User>();
         }
     }
 }

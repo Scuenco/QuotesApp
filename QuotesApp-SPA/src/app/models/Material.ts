@@ -1,6 +1,6 @@
-export class Material {
-  Id: number;
-  Name: string ;
-  Quantity: number ;
-  Price: number;
+export interface Material {
+  id: number;
+  name: string ;
+  quantity: number ;
+  price: number;
 }

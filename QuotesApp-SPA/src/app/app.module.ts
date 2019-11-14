@@ -8,9 +8,10 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import {MatRadioModule} from '@angular/material/radio';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './routes';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
 import { CustomerComponent } from './customer/customer.component';
@@ -22,7 +23,11 @@ import { RegisterComponent } from './register/register.component';
 
 import { AuthService } from './services/auth.service';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
+import { QuoteService } from './services/quote.service';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
    declarations: [
@@ -40,17 +45,26 @@ import { ErrorInterceptorProvider } from './services/error.interceptor';
       HttpClientModule,
       BrowserAnimationsModule,
       FormsModule,
+      ReactiveFormsModule,
       BsDropdownModule.forRoot(),
+      BsDatepickerModule.forRoot(),
       MatSelectModule,
       MatFormFieldModule,
-      ReactiveFormsModule,
       MatAutocompleteModule,
       MatInputModule,
       CommonModule,
-      MatRadioModule
+      MatRadioModule,
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: tokenGetter,
+          whitelistedDomains: ['localhost:5000'],
+          blacklistedRoutes: ['localhost:5000/api/auth']
+        }
+      })
    ],
    providers: [
       AuthService,
+      QuoteService,
       ErrorInterceptorProvider
    ],
    bootstrap: [
